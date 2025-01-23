@@ -22,3 +22,7 @@ python poc.py all
 pngcheck -v poc-loop.mng
 pngcheck poc-pplt.mng
 ```
+
+## Note on sPLT Vulnerability
+
+Although the official security advisory mentions a vulnerability in the sPLT chunk, it is difficult to exploit in practice due to the constraints of `toread` size limits and the requirement that `remainder` must be exactly divisible by `entry_sz`.
