@@ -55,7 +55,7 @@ def generate_poc(
 # caused by unchecked 'sz' variable exceeding BS in MNG chunk processing.
 # The sCAL case shows a null pointer dereference when pPixheight is uninitialized.
 POCS = {
-    # DBYK
+    # DBYK chunk
     # Command: pngcheck -f poc-dbyk.mng
     "dbyk": (
         MNG,
@@ -88,6 +88,7 @@ POCS = {
             (b"MEND", b""),
         ],
     ),
+    # LOOP chunk
     # Command: pngcheck -v poc-loop.mng
     "loop": (
         MNG,
