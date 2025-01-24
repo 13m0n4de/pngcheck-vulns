@@ -1,6 +1,6 @@
 # Vulns in pngcheck 3.0.0
 
-Two Buffer out-of-bounds read found in pngcheck 3.0.0.
+Two buffer over-read found in pngcheck 3.0.0.
 
 - PPLT chunk: when `last_idx` < `first_idx`, `bytes_left` increases instead of decreases
 - LOOP chunk: buffer overflow due to unchecked iterations count

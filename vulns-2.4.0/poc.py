@@ -3,7 +3,7 @@
 PNGCheck Vulnerability POC Generator
 Generates POC files demonstrating multiple vulnerabilities in pngcheck 2.4.0:
 
-- Multiple global buffer out-of-bounds read due to unchecked 'sz' variable in MNG chunks
+- Multiple global buffer over-read due to unchecked 'sz' variable in MNG chunks
 - Null pointer dereference of pPixheight in sCAL chunk with -f option
 
 Each POC can be generated individually or all at once using the 'all' option.
@@ -51,7 +51,7 @@ def generate_poc(
     )
 
 
-# Most POCs here demonstrate a global buffer out-of-bounds read vulnerability
+# Most POCs here demonstrate a global buffer over-read vulnerability
 # caused by unchecked 'sz' variable exceeding BS in MNG chunk processing.
 # The sCAL case shows a null pointer dereference when pPixheight is uninitialized.
 POCS = {
@@ -200,7 +200,7 @@ def main():
     parser = argparse.ArgumentParser(
         description=(
             "Generate POC files for pngcheck 2.4.0 vulnerabilities (multiple buffer "
-            "out-of-bounds reads and a null pointer dereference)"
+            "over-reads and a null pointer dereference)"
         )
     )
     parser.add_argument(

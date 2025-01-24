@@ -2,7 +2,7 @@
 
 Multiple vulnerabilities found in pngcheck 2.4.0, including:
 
-- Buffer out-of-bounds read in MNG chunks (DBYK, DISC, DROP, LOOP, nEED, ORDR, PAST, PPLT, SAVE, SEEK)
+- Buffer over-read in MNG chunks (DBYK, DISC, DROP, LOOP, nEED, ORDR, PAST, PPLT, SAVE, SEEK)
 - Null-pointer dereference in sCAL chunk
 
 ## POC Files

@@ -3,8 +3,8 @@
 PNGCheck Vulnerability POC Generator
 Generates POC files demonstrating multiple vulnerabilities in pngcheck 3.0.0:
 
-- Global buffer out-of-bounds read in PPLT chunk when last_index < first_index
-- Global buffer out-of-bounds read in LOOP chunk due to unchecked iterations count
+- Global buffer over-read in PPLT chunk when last_index < first_index
+- Global buffer over-read in LOOP chunk due to unchecked iterations count
 
 Each POC can be generated individually or all at once using the 'all' option.
 """
@@ -86,7 +86,7 @@ def main():
     parser = argparse.ArgumentParser(
         description=(
             "Generate POC files for pngcheck 3.0.0 vulnerabilities (global buffer "
-            "out-of-bounds read in PPLT and LOOP chunks)"
+            "over-read in PPLT and LOOP chunks)"
         )
     )
     parser.add_argument(

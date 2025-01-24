@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 PNGCheck Vulnerability POC Generator
-Generates POC file demonstrating buffer out-of-bounds read
+Generates POC file demonstrating buffer over-read
 vulnerability in pngcheck 3.0.1
 """
 
@@ -53,7 +53,7 @@ def generate_poc(output_path: pathlib.Path) -> None:
 def main():
     parser = argparse.ArgumentParser(
         description=(
-            "Generate POC files for pngcheck 3.0.1 buffer out-of-bounds read "
+            "Generate POC files for pngcheck 3.0.1 buffer over-read "
             "vulnerability (unchecked iterations count in LOOP chunk)"
         )
     )
