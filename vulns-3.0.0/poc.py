@@ -4,7 +4,7 @@ PNGCheck Vulnerability POC Generator
 Generates POC files demonstrating multiple vulnerabilities in pngcheck 3.0.0:
 
 - Global buffer over-read in PPLT chunk when last_index < first_index
-- Global buffer over-read in LOOP chunk due to unchecked iterations count
+- Global buffer over-read in LOOP chunk due to unchecked chunk size
 
 Each POC can be generated individually or all at once using the 'all' option.
 """

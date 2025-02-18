@@ -54,7 +54,7 @@ def main():
     parser = argparse.ArgumentParser(
         description=(
             "Generate POC files for pngcheck 3.0.1 buffer over-read "
-            "vulnerability (unchecked iterations count in LOOP chunk)"
+            "vulnerability (unchecked chunk size in LOOP chunk)"
         )
     )
     parser.add_argument(
