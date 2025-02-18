@@ -2,7 +2,7 @@
 
 Affected versions: 3.0.0, 3.0.1.
 
-LOOP chunk: buffer over-read due to unchecked iterations count.
+LOOP chunk: buffer over-read due to unchecked chunk size
 
 POC file is identical to [vulns-3.0.0/poc-loop.mng](../vulns-3.0.0/poc-loop.mng).
 

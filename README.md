@@ -10,10 +10,10 @@ For detailed vulnerability analysis, see [my research notes](https://13m0n4de.ve
 
 | Directory                           | Type                     | Description                                                   | Version  |
 | ----------------------------------- | ------------------------ | ------------------------------------------------------------- | -------- |
-| [vulns-3.0.1](./vulns-3.0.1/)       | Buffer Over-read         | LOOP chunk: unchecked iteration count                         | \<=3.0.1 |
+| [vulns-3.0.1](./vulns-3.0.1/)       | Buffer Over-read         | LOOP chunk: unchecked chunk size                              | \<=3.0.1 |
 | [vulns-3.0.0](./vulns-3.0.0/)       | Buffer Over-read         | PPLT chunk: first_idx/last_idx handling error                 | \<=3.0.0 |
 | [vulns-2.4.0](./vulns-2.4.0/)       | Null-pointer Dereference | sCAL chunk: invalid pointer access                            | \<=2.4.0 |
-| [vulns-2.4.0](./vulns-2.4.9/)       | Buffer Over-read         | MNG chunks: buffer over-read in 10 chunk types                | \<=2.4.0 |
+| [vulns-2.4.0](./vulns-2.4.0/)       | Buffer Over-read         | MNG chunks: buffer over-read in 10 chunk types                | \<=2.4.0 |
 | [CVE-2020-35511](./CVE-2020-35511/) | Buffer Over-read         | print_buffer(): insufficient size validation                  | \<=2.4.0 |
 | [CVE-2020-27818](./CVE-2020-27818/) | Out-of-bounds Read       | check_chunk_name(): negative array index from char conversion | \<=2.4.0 |
 
@@ -36,5 +36,5 @@ For detailed instructions, refer to the README.md in each directory.
 - [NVD - CVE-2020-27818](https://nvd.nist.gov/vuln/detail/CVE-2020-27818)
 - [NVD - CVE-2020-35511](https://nvd.nist.gov/vuln/detail/CVE-2020-35511)
 - [giantbranch's blog](https://www.giantbranch.cn/vulfound/)
-- [Portable Network Graphics (PNG) Specification and Extensions](http://www.libpng.org/pub/mng/spec)
-- [MNG (Multiple-image Network Graphics) Format](http://www.libpng.org/pub/png/spec)
+- [Portable Network Graphics (PNG) Specification and Extensions](http://www.libpng.org/pub/png/spec)
+- [MNG (Multiple-image Network Graphics) Format](http://www.libpng.org/pub/mng/spec)
